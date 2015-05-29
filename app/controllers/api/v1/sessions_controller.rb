@@ -4,14 +4,14 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def create
     @user = warden.authenticate(:scope => resource_name, :recall => "#{controller_path}#failure")
+    binding.pry
     if @user.present?  
       render :status => 200,
            :json => { :success => true,
                       :info => "Logged in",
                       :data => { :auth_token => current_user.authentication_token, 
-                                 :user_info => current_user,
-                                 :profile_picture => current_user.profile_picture,
-                                 :cover_photo => current_user.cover_photo }}
+                                 :user_info => current_user
+                                }}
     else
       render :status => 300,
       :json => { :success => false, :info => "Invalid email or password"}
