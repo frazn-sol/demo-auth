@@ -4,7 +4,6 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def create
     @user = warden.authenticate(:scope => resource_name, :recall => "#{controller_path}#failure")
-    binding.pry
     if @user.present?  
       render :status => 200,
            :json => { :success => true,
